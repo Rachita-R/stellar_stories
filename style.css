@@ -1,0 +1,111 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #0b3d91, #000);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+  padding: 40px;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.character-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.character-card {
+  display: block;
+  padding: 20px 30px;
+  background: #1e90ff;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.2em;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.character-card:hover {
+  transform: scale(1.05);
+  background: #4682b4;
+}
+
+.story-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: rgba(0,0,0,0.7);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.story-title {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.story-intro {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.scenario-text {
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice-button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #1e90ff;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.choice-button:hover {
+  background: #4682b4;
+}
+
+.outcome-container {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: rgba(30, 144, 255, 0.2);
+}
+
+.hidden {
+  display: none;
+}
+
+.back-button {
+  margin-top: 25px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #ff6347;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.back-button:hover {
+  background: #ff4500;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="story-container">
+    <div class="story-header">
+      <h1 class="story-title">{{ story.title }}</h1>
+      <p class="story-intro">{{ story.intro }}</p>
+    </div>
+
+    <div class="story-content">
+      <div id="scenario-container"></div>
+      <div id="outcome-container" class="outcome-container hidden"></div>
+    </div>
+
+    <button onclick="window.location.href='/'" class="back-button">🔙 Choose Another Character</button>
+  </div>
+
+  <!-- Embed JSON safely -->
+  <script id="story-data" type="application/json">
+    {{ story_json | safe }}
+  </script>
+
+  <script>
+    // Parse JSON safely from the script tag
+    const storyData = JSON.parse(document.getElementById("story-data").textContent);
+    let scenarioIndex = 0;
+
+    function showScenario(index) {
+      const container = document.getElementById('scenario-container');
+      const scenario = storyData.scenarios[index];
+      if (!scenario) {
+        container.innerHTML = "<p>✨ The End! You’ve completed the journey.</p>";
+        return;
+      }
+
+      let html = `<p class="scenario-text">${scenario.text}</p><div class="choices-container">`;
+      scenario.choices.forEach((choice, i) => {
+        html += `<button class="choice-button" onclick="makeChoice(${i})">${choice.text}</button>`;
+      });
+      html += "</div>";
+
+      container.innerHTML = html;
+      document.getElementById('outcome-container').classList.add('hidden');
+    }
+
+    function makeChoice(choiceIndex) {
+      fetch("/api/choice", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ character: "{{ character }}", scenario: scenarioIndex, choice: choiceIndex })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.outcome) {
+          const outcomeBox = document.getElementById('outcome-container');
+          outcomeBox.innerHTML = `<p>${data.outcome}</p>`;
+          outcomeBox.classList.remove('hidden');
+
+          if (data.next_scenario !== null && data.next_scenario !== undefined) {
+            setTimeout(() => {
+              scenarioIndex = data.next_scenario;
+              showScenario(data.next_scenario);
+            }, 1800);
+          } else {
+            setTimeout(() => {
+              document.getElementById('scenario-container').innerHTML = "<p>✨ The End! You’ve completed the journey.</p>";
+            }, 1800);
+          }
+        } else if (data.error) {
+          alert("Error: " + data.error);
+        }
+      })
+      .catch(err => console.error(err));
+    }
+
+    // Load first scenario
+    showScenario(0);
+  </script>
+</body>
+</html>

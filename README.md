@@ -31,7 +31,8 @@ REST‑style API for handling story progression
 
 Responsive and visually appealing space‑themed UI
 
-4. Characters and Scenarios
+4. Characters and Scenarios:
+
 4.1 Astronaut
 Explores the impact of solar radiation and geomagnetic storms aboard the International Space Station, focusing on crew safety and mission decisions.
 
